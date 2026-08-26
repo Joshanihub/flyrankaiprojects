@@ -16,13 +16,13 @@ SkillOS Lite turns a real work scenario into a structured conversation about the
 
 ## Tech stack
 
-Next.js 14 · App Router · TypeScript · Tailwind CSS · Vercel AI SDK · Google Gemini
+Next.js 16.3.3 · App Router · TypeScript · Tailwind CSS · Vercel AI SDK · Google Gemini
 
 ## Run locally
 
 ```bash
-git clone https://github.com/Joshanihub/skillos-lite.git
-cd skillos-lite
+git clone https://github.com/Joshanihub/flyrankaiprojects.git
+cd flyrankaiprojects/skillos-lite
 npm install
 copy .env.example .env.local
 # Add your GOOGLE_GENERATIVE_AI_API_KEY to .env.local
@@ -38,6 +38,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | `GOOGLE_GENERATIVE_AI_API_KEY` | Gemini API key from [aistudio.google.com](https://aistudio.google.com) | Yes      |
 
 The key is read only by the server route handler and is never exposed to the client.
+
+## Validation
+
+The current project passes both checks:
+
+```bash
+npm run lint
+npm run build
+```
 
 ## Status
 
