@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f2ec;
+  --foreground: #1d2722;
+  --ink: #1d2722;
+  --muted: #69736c;
+  --line: #d8ddd5;
+  --accent: #4d735f;
+  --accent-dark: #365340;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+::selection {
+  background: #c4d5c8;
+}
+
+.page-shell {
+  background: radial-gradient(circle at 78% 16%, #e2eadf 0, transparent 28rem), var(--background);
+}
+
+.hero-grid {
+  min-height: calc(100vh - 74px);
+}
+
+.eyebrow {
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.button-primary,
+.button-quiet {
+  align-items: center;
+  display: inline-flex;
+  font-size: 0.875rem;
+  font-weight: 600;
+  gap: 0.75rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.button-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.button-primary:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+.button-quiet {
+  color: var(--accent-dark);
+}
+
+.button-quiet:hover {
+  background: #e7ebe4;
+}
+
+.signal-card {
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(216, 221, 213, 0.95);
+  box-shadow: 0 24px 60px rgba(47, 67, 54, 0.11);
+  padding: 1.75rem;
+  transform: rotate(2deg);
+  width: 19rem;
+}
+
+.status-dot {
+  align-items: center;
+  color: var(--accent);
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.status-dot::before {
+  background: var(--accent);
+  border-radius: 999px;
+  content: "";
+  height: 0.4rem;
+  width: 0.4rem;
+}

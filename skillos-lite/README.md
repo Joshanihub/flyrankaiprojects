@@ -50,4 +50,4 @@ npm run build
 
 ## Status
 
-Application shell complete. Streaming evaluation conversation implemented. Testing and error state hardening in progress.
+Application shell, routed placeholders, health check, streaming evaluation conversation, loading state, stop action, and route-level error boundary are implemented. Local lint and production build pass. Vercel deployment and final evaluation evidence are still pending.
