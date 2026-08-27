@@ -20,6 +20,7 @@ export async function POST(request: Request) {
       system: evaluationSystemPrompt,
       messages: await convertToModelMessages(messages),
       maxOutputTokens: 1500,
+    });
 
     return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: result.stream }) });
   } catch {
