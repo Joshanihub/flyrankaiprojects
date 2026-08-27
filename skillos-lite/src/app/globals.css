@@ -27,6 +27,30 @@ body {
   background: #c4d5c8;
 }
 
+/* Custom scrollbar — matches project accent palette */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b8ccc0;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #b8ccc0 transparent;
+}
+
 .page-shell {
   background: radial-gradient(circle at 78% 16%, #e2eadf 0, transparent 28rem), var(--background);
 }

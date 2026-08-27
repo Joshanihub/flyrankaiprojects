@@ -9,6 +9,7 @@ export function SkillChat() {
   const [isAtBottom, setIsAtBottom] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [sessionId] = useState(() => Math.random().toString(36).substring(7));
   const { messages, sendMessage, status, stop, error } = useChat();
   const isLoading = status === "submitted" || status === "streaming";
 
@@ -17,6 +18,41 @@ export function SkillChat() {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isAtBottom]);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      try {
+        const history = JSON.parse(localStorage.getItem("skillos_history") || "[]");
+        const existingIndex = history.findIndex((h: { id: string }) => h.id === sessionId);
+        
+        // Find the first text part from the user
+        const firstUserMsg = messages.find(m => m.role === "user");
+        let preview = "Evaluation";
+        if (firstUserMsg && firstUserMsg.parts) {
+          const textPart = firstUserMsg.parts.find((p: any) => p.type === "text");
+          if (textPart && 'text' in textPart) {
+            preview = (textPart.text as string).substring(0, 60) + "...";
+          }
+        }
+
+        const summary = {
+          id: sessionId,
+          date: new Date().toISOString(),
+          preview,
+          messages,
+        };
+
+        if (existingIndex >= 0) {
+          history[existingIndex] = summary;
+        } else {
+          history.unshift(summary);
+        }
+        localStorage.setItem("skillos_history", JSON.stringify(history));
+      } catch (e) {
+        console.error("Failed to save history", e);
+      }
+    }
+  }, [messages, sessionId]);
 
   function handleScroll() {
     const container = scrollContainerRef.current;
@@ -37,7 +73,7 @@ export function SkillChat() {
 
   return (
     <section className="flex min-h-[34rem] flex-col border border-[var(--line)] bg-white/45" aria-label="Skill evaluation chat">
-      <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 space-y-5 overflow-y-auto p-5 sm:p-7">
+      <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 space-y-5 overflow-y-auto overflow-x-hidden p-5 sm:p-7">
         {messages.length === 0 ? (
           <div className="flex min-h-[24rem] flex-col justify-center">
             <p className="eyebrow">Start anywhere</p>
@@ -54,18 +90,19 @@ export function SkillChat() {
               <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
                 {message.role === "user" ? "You" : "SkillOS"}
               </p>
-              <div className={message.role === "user" ? "bg-[var(--accent)] px-4 py-3 text-sm leading-6 text-white" : "border-l-2 border-[var(--accent)] px-4 py-1 text-sm leading-7 text-[var(--ink)]"}>
+              <div className={message.role === "user" ? "bg-[var(--accent)] px-4 py-3 text-sm leading-6 text-white break-words" : "border-l-2 border-[var(--accent)] px-4 py-1 text-sm leading-7 text-[var(--ink)] break-words"}>
                 {message.parts.map((part, index) => 
                   part.type === "text" ? (
                     message.role === "user" ? (
                       <span key={`${message.id}-${index}`}>{part.text}</span>
                     ) : (
-                      <div key={`${message.id}-${index}`} className="animate-fade-in-up">
+                      <div key={`${message.id}-${index}`} className="animate-fade-in-up overflow-x-auto">
                         <ReactMarkdown 
                           components={{
                             h3: ({node, ...props}) => <h3 className="mt-5 mb-1 text-xs font-bold uppercase tracking-wider text-[var(--accent-dark)] first:mt-0" {...props} />,
                             strong: ({node, ...props}) => <strong className="font-semibold text-[var(--ink)]" {...props} />,
-                            p: ({node, ...props}) => <p className="mb-3 last:mb-0" {...props} />
+                            p: ({node, ...props}) => <p className="mb-3 last:mb-0" {...props} />,
+                            pre: ({node, ...props}) => <pre className="overflow-x-auto max-w-full bg-[#f4f2ec] p-3 my-2 text-xs" {...props} />
                           }}
                         >
                           {part.text}
