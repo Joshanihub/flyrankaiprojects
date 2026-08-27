@@ -4,6 +4,21 @@ import { useChat } from "@ai-sdk/react";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useRef, useState } from "react";
 
+const SAMPLE_SCENARIOS = [
+  {
+    label: "Debugging under pressure",
+    text: "I was responsible for a production outage that started at 11pm. Our checkout service was returning 500 errors. I had 30 minutes to fix it before it became a major business issue. I started by checking the recent deployments, found a config change that had silently broken the DB connection string, rolled it back, and verified the fix. The team lead found out I had done it solo and was surprised. I am not sure if I handled it the right way or just got lucky.",
+  },
+  {
+    label: "Disagreeing with a senior engineer",
+    text: "During a code review, a senior engineer asked me to add a caching layer that I thought would introduce more complexity than the performance gain warranted. I pushed back, explained my reasoning using benchmarks I had run locally, and suggested we measure first before building. They disagreed but said they'd consider it. The next day they agreed with my approach. I am not sure whether I communicated this well or just got lucky that the data was on my side.",
+  },
+  {
+    label: "Onboarding to a legacy codebase",
+    text: "I joined a team mid-sprint and had to ship a feature in a 6-year-old Rails monolith with no documentation and inconsistent test coverage. I spent the first day reading the git history and writing down what I thought each module did. On day two I made a small change that broke an unrelated part of the app because of a shared global state I hadn't seen. I caught it in code review, fixed it, but it slowed me down. I ended up shipping on time but felt like I was operating blind the whole time.",
+  },
+];
+
 export function SkillChat() {
   const [input, setInput] = useState("");
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -83,6 +98,21 @@ export function SkillChat() {
             <p className="mt-3 max-w-md text-sm leading-6 text-[var(--muted)]">
               Include what you were trying to do, what went wrong, and how you responded. Specific beats polished.
             </p>
+            <div className="mt-8">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">Try a sample scenario</p>
+              <div className="flex flex-wrap gap-2">
+                {SAMPLE_SCENARIOS.map((s) => (
+                  <button
+                    key={s.label}
+                    type="button"
+                    onClick={() => setInput(s.text)}
+                    className="border border-[var(--line)] bg-white/60 px-3 py-1.5 text-xs font-medium text-[var(--ink)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-white"
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           messages.map((message) => (
