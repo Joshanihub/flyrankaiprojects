@@ -1,21 +1,10 @@
-import { google } from "@ai-sdk/google";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { convertToModelMessages, createUIMessageStreamResponse, streamText, toUIMessageStream, type UIMessage } from "ai";
 import { z } from "zod";
+import { evaluationModel, evaluationSystemPrompt } from "@/lib/ai-config";
 
 const requestSchema = z.object({
   messages: z.array(z.unknown()).min(1),
 });
-
-const systemPrompt = `You are a practical skill evaluation assistant for SkillOS Lite.
-
-When a user describes a work scenario:
-- Name the main skill demonstrated.
-- Assess it as Novice, Developing, Proficient, or Expert.
-- Point out one specific strength from the story.
-- Suggest one concrete area for improvement.
-- Offer one realistic next challenge.
-
-Keep the response focused and use short headings. Do not invent details that the user did not provide.`;
 
 export async function POST(request: Request) {
   try {
@@ -27,13 +16,12 @@ export async function POST(request: Request) {
 
     const messages = parsed.data.messages as UIMessage[];
     const result = streamText({
-      model: google("gemini-3.5-flash"),
-      system: systemPrompt,
+      model: evaluationModel,
+      system: evaluationSystemPrompt,
       messages: await convertToModelMessages(messages),
-      maxOutputTokens: 700,
-    });
+      maxOutputTokens: 1500,
 
-    return result.toUIMessageStreamResponse();
+    return createUIMessageStreamResponse({ stream: toUIMessageStream({ stream: result.stream }) });
   } catch {
     return Response.json({ error: "The evaluation could not be started." }, { status: 500 });
   }
