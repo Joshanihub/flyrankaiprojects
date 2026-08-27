@@ -60,16 +60,17 @@ export function SkillChat() {
                     message.role === "user" ? (
                       <span key={`${message.id}-${index}`}>{part.text}</span>
                     ) : (
-                      <ReactMarkdown 
-                        key={`${message.id}-${index}`}
-                        components={{
-                          h3: ({node, ...props}) => <h3 className="mt-5 mb-1 text-xs font-bold uppercase tracking-wider text-[var(--accent-dark)] first:mt-0" {...props} />,
-                          strong: ({node, ...props}) => <strong className="font-semibold text-[var(--ink)]" {...props} />,
-                          p: ({node, ...props}) => <p className="mb-3 last:mb-0" {...props} />
-                        }}
-                      >
-                        {part.text}
-                      </ReactMarkdown>
+                      <div key={`${message.id}-${index}`} className="animate-fade-in-up">
+                        <ReactMarkdown 
+                          components={{
+                            h3: ({node, ...props}) => <h3 className="mt-5 mb-1 text-xs font-bold uppercase tracking-wider text-[var(--accent-dark)] first:mt-0" {...props} />,
+                            strong: ({node, ...props}) => <strong className="font-semibold text-[var(--ink)]" {...props} />,
+                            p: ({node, ...props}) => <p className="mb-3 last:mb-0" {...props} />
+                          }}
+                        >
+                          {part.text}
+                        </ReactMarkdown>
+                      </div>
                     )
                   ) : null
                 )}
@@ -77,7 +78,8 @@ export function SkillChat() {
             </div>
           ))
         )}
-        {status === "submitted" ? <p className="text-sm text-[var(--muted)]">Reading the signal...</p> : null}
+        {status === "submitted" ? <p className="animate-pulse-opacity text-sm font-medium tracking-wide text-[var(--accent)]">Thinking...</p> : null}
+        {status === "streaming" ? <p className="animate-pulse-opacity text-xs tracking-wide text-[var(--muted)]">Sending...</p> : null}
         {error ? <p className="border border-[#e5b8b0] bg-[#fff4f1] p-3 text-sm text-[#934838]" role="alert">{error.message || "Something went wrong. Try again."}</p> : null}
         <div ref={messagesEndRef} />
       </div>

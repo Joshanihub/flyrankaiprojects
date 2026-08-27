@@ -44,10 +44,22 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section className="mx-auto grid w-full max-w-6xl gap-6 border-t border-[var(--line)] px-6 py-8 text-sm text-[var(--muted)] sm:grid-cols-3 lg:px-10">
-        <p><span className="font-semibold text-[var(--ink)]">01</span> Tell the story</p>
-        <p><span className="font-semibold text-[var(--ink)]">02</span> Spot the skill</p>
-        <p><span className="font-semibold text-[var(--ink)]">03</span> Choose the next stretch</p>
+      <section className="mx-auto grid w-full max-w-6xl gap-10 border-t border-[var(--line)] px-6 py-16 sm:grid-cols-3 lg:px-10">
+        <div>
+          <p className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-lg font-semibold text-white">1</p>
+          <h3 className="mt-5 text-lg font-semibold text-[var(--ink)]">Tell the story</h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Start with a raw, unstructured story about a moment your work got difficult. Don't worry about formatting or using the right keywords.</p>
+        </div>
+        <div>
+          <p className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-lg font-semibold text-white">2</p>
+          <h3 className="mt-5 text-lg font-semibold text-[var(--ink)]">Spot the skill</h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Our AI engine instantly processes your story to extract the core engineering skills you demonstrated, rating your proficiency on a 1-100 scale.</p>
+        </div>
+        <div>
+          <p className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-lg font-semibold text-white">3</p>
+          <h3 className="mt-5 text-lg font-semibold text-[var(--ink)]">Choose the next stretch</h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Receive a tailored, actionable challenge designed to push your identified skills to the next level of seniority.</p>
+        </div>
       </section>
     </main>
   );

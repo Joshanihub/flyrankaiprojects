@@ -1,7 +1,7 @@
 import { google } from "@ai-sdk/google";
 
 // Keep provider and prompt decisions together so the route stays focused on request handling.
-export const evaluationModel = google("gemini-3.6-flash");
+export const evaluationModel = google("gemini-3.5-flash");
 
 export const evaluationSystemPrompt = `You are SkillOS Lite, a principal-level engineering manager and executive coach. You evaluate work scenarios with deep insight, rigor, and actionable feedback.
 

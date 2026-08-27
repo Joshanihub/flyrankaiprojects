@@ -1,53 +1,70 @@
 # SkillOS Lite
 
-An AI-powered skill evaluation interface built as part of the FlyRank Frontend AI Engineering internship.
+![SkillOS Lite](https://skillos-lite.vercel.app/og-image.png)
 
-## What it does
+SkillOS Lite is an AI-powered skill evaluation interface built as the capstone project for the FlyRank Frontend AI Engineering internship. It demonstrates how to leverage modern LLMs (Google Gemini via Vercel AI SDK) to turn unstructured work scenarios into rigorous, structured skill assessments.
 
-SkillOS Lite turns a real work scenario into a structured conversation about the skill it demonstrates. Describe a situation where you applied a skill — the app evaluates what you demonstrated, assesses your proficiency level, identifies a strength, and suggests a concrete next challenge.
+## 🚀 Live Demo
 
-## Current routes
+**[Experience SkillOS Lite here](https://flyrankaiprojects.vercel.app/)**
 
-- `/` — introduction and entry point
-- `/evaluate` — streaming AI evaluation interface
-- `/history` — saved evaluations (coming soon)
-- `/about` — project context
-- `/health` — server-side fetch health check
+## ✨ Features
 
-## Tech stack
+- **Streaming AI Evaluation**: Uses `useChat` and `streamText` to stream tokens progressively to the UI, providing a responsive and dynamic evaluation experience.
+- **Expert-Level Assessments**: The AI is strictly prompted to act as a principal-level engineering manager, providing deep insights, actionable growth areas, and specific next challenges.
+- **Accessible & Robust Forms**: Built with `react-hook-form` and `zod` schema validation, complete with strict ARIA standards (`role="alert"`, `aria-describedby`, `aria-invalid`) ensuring full usability for assistive technologies.
+- **Comprehensive Error States**: Includes global 404 boundaries, route-level error boundaries, loading skeletons using React Suspense, and graceful handling of empty states.
 
-Next.js 16.3.3 · App Router · TypeScript · Tailwind CSS · Vercel AI SDK · Google Gemini
+## 🏗️ Architecture & Tech Stack
 
-## Run locally
+- **Framework**: [Next.js 16.3.3](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **AI Integration**: [Vercel AI SDK](https://sdk.vercel.ai/docs) + `@ai-sdk/google` (Gemini-3.6-Flash)
+- **Validation**: [Zod](https://zod.dev/)
+- **Deployment**: [Vercel](https://vercel.com/)
 
-```bash
-git clone https://github.com/Joshanihub/flyrankaiprojects.git
-cd flyrankaiprojects/skillos-lite
-npm install
-copy .env.example .env.local
-# Add your GOOGLE_GENERATIVE_AI_API_KEY to .env.local
-npm run dev
-```
+## 📂 Project Structure
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+- `/` — Landing page and entry point
+- `/evaluate` — The core streaming AI chat interface
+- `/history` — Saved evaluations (includes tailored empty states)
+- `/settings` — Accessible, Zod-validated user settings form
+- `/health` — Server-side fetch health check to verify backend connectivity
 
-## Environment variables
+## 🛠️ Local Development
 
-| Variable                       | Description                                                            | Required |
-| ------------------------------ | ---------------------------------------------------------------------- | -------- |
-| `GOOGLE_GENERATIVE_AI_API_KEY` | Gemini API key from [aistudio.google.com](https://aistudio.google.com) | Yes      |
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Joshanihub/flyrankaiprojects.git
+   cd flyrankaiprojects/skillos-lite
+   ```
 
-The key is read only by the server route handler and is never exposed to the client.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## Validation
+3. **Environment Setup**
+   Copy the example environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
+   Add your Gemini API key to `.env.local`:
+   ```env
+   GOOGLE_GENERATIVE_AI_API_KEY="your_api_key_here"
+   ```
+   *(Note: The API key is only accessed server-side via Next.js route handlers and is never exposed to the client).*
 
-The current project passes both checks:
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-npm run lint
-npm run build
-```
+## 🧪 Deployment Hygiene
 
-## Status
-
-Application shell, routed placeholders, health check, streaming evaluation conversation, loading state, stop action, and route-level error boundary are implemented. Local lint and production build pass. Vercel deployment and final evaluation evidence are still pending.
+This project adheres to strict deployment and security hygiene:
+- **No secrets in source control**: `.env.local` is gitignored. Only `.env.example` is tracked.
+- **Type Safety**: The project passes `npm run build` and `npm run lint` with zero errors.
+- **Graceful degradation**: All async UI actions handle loading, success, and error states visibly and accessibly.
